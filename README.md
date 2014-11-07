@@ -16,3 +16,20 @@ This StrobeMediaPlayback configuration features:
 
 Quick start
 ------------
+Embed code
+
+Configuration
+------------
+Params description
+
+JavaScript API
+------------
+Methods exposed and callbacks
+
+VAST Ads
+------------
+VAST
+
+Subtitles
+------------
+How to add subtitles
