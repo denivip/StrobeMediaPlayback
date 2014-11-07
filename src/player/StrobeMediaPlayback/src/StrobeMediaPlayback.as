@@ -53,6 +53,7 @@ package
 	import org.osmf.traits.PlayTrait;
 	import org.osmf.utils.OSMFSettings;
 	import org.osmf.utils.OSMFStrings;
+	import org.denivip.osmf.plugins.HLSPluginInfo;
 	
 	CONFIG::LOGGING
 	{
@@ -242,8 +243,13 @@ package
 				pluginResource.addMetadataValue("MediaPlayer", player);
 			}
 			
+			// Plugins
 			var pluginLoader:PluginLoader;
 			factory = injector.getInstance(MediaFactory);
+			// HLS plugin
+			var hlsPlugin:PluginInfoResource = new PluginInfoResource(new HLSPluginInfo());
+			factory.loadPlugin(hlsPlugin);
+			// Other plugins (from settings)
 			pluginLoader = new PluginLoader(pluginConfigurations, factory, pluginHostWhitelist);
 			pluginLoader.haltOnError = configuration.haltOnError;
 			

@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>ChromeLibrary</project>
+		<project>OSMF</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
