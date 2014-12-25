@@ -27,8 +27,6 @@ package org.osmf.player.chrome.widgets
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
-	import flashx.textLayout.formats.VerticalAlign;
-	
 	import org.osmf.player.chrome.events.ScrubberEvent;
 
 	[Event(name="scrubStart", type="org.osmf.samples.controlbar.ScrubberEvent")]

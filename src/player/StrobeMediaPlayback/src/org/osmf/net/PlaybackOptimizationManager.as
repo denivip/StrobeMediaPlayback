@@ -19,12 +19,8 @@
 
 package org.osmf.net
 {
-	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
-	
-	import flashx.textLayout.elements.Configuration;
-	import flashx.textLayout.events.UpdateCompleteEvent;
 	
 	import org.osmf.elements.VideoElement;
 	import org.osmf.player.chrome.utils.MediaElementUtils;

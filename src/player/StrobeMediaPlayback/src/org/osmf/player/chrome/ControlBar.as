@@ -35,8 +35,9 @@ package org.osmf.player.chrome
 	import org.osmf.player.chrome.widgets.PlayButton;
 	import org.osmf.player.chrome.widgets.PlaylistNextButton;
 	import org.osmf.player.chrome.widgets.PlaylistPreviousButton;
-	import org.osmf.player.chrome.widgets.QualityIndicator;
+	import org.osmf.player.chrome.widgets.QualitySwitcher;
 	import org.osmf.player.chrome.widgets.ScrubBar;
+	import org.osmf.player.chrome.widgets.SubsSwitcher;
 	import org.osmf.player.chrome.widgets.TimeViewWidget;
 	import org.osmf.player.chrome.widgets.Widget;
 	import org.osmf.player.chrome.widgets.WidgetIDs;
@@ -135,11 +136,17 @@ package org.osmf.player.chrome
 			timeViewWidget.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;	
 			rightControls.addChildWidget(timeViewWidget);
 			
+			// CC switcher
+			var ccSwitcher:SubsSwitcher = new SubsSwitcher();
+			ccSwitcher.layoutMetadata.verticalAlign = VerticalAlign.MIDDLE;
+			ccSwitcher.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
+			rightControls.addChildWidget(ccSwitcher);
+			
 			// HD indicator
-			var hdIndicator:QualityIndicator = new QualityIndicator();
-			hdIndicator.layoutMetadata.verticalAlign = VerticalAlign.MIDDLE;
-			hdIndicator.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
-			rightControls.addChildWidget(hdIndicator);
+			var streamSwitcher:QualitySwitcher = new QualitySwitcher();
+			streamSwitcher.layoutMetadata.verticalAlign = VerticalAlign.MIDDLE;
+			streamSwitcher.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
+			rightControls.addChildWidget(streamSwitcher);
 			
 			// Spacer
 			var afterTimeSpacer:Widget = new Widget();
@@ -176,7 +183,7 @@ package org.osmf.player.chrome
 			var afterFullscreenSpacer:Widget = new Widget();
 			afterFullscreenSpacer.layoutMetadata.width = 13;
 			addChildWidget(afterFullscreenSpacer);
-
+			
 			var filler:Widget = new Widget();
 
 			var rightMargin:Widget = new Widget();
@@ -184,13 +191,12 @@ package org.osmf.player.chrome
 			rightMargin.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
 			addChildWidget(rightMargin);				
 
-
 			configureWidgets
 				(	[ leftMargin, beforePlaySpacer, pauseButton, playButton, previousButton, nextButton, afterPlaySpacer
 					, leftControls		
 					, scrubBar, afterScrubSpacer
 					, timeViewWidget, afterTimeSpacer
-					, hdIndicator, muteButton, afterVolumeSpacer
+					, ccSwitcher, streamSwitcher, muteButton, afterVolumeSpacer
 					, fullscreenEnterButton, fullscreenLeaveButton, afterFullscreenSpacer
 					, rightControls, rightMargin
 					]

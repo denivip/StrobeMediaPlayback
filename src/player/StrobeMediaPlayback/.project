@@ -16,4 +16,16 @@
 	<natures>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>[source path] src</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/plugins/SubtitlesPlugin/src</locationURI>
+		</link>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>D:/Work/webserver/www/smartstream/smp</location>
+		</link>
+	</linkedResources>
 </projectDescription>

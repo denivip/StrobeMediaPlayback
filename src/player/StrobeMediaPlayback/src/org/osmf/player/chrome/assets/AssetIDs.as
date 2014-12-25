@@ -104,6 +104,7 @@ package org.osmf.player.chrome.assets
 		
 		public static const HD_ON:String = "hdOn";
 		public static const HD_OFF:String = "hdOff";
+		public static const HD_OVER:String = "hdOver";
 		
 		public static const PREVIOUS_BUTTON_NORMAL:String = "previousButtonNormal";
 		public static const PREVIOUS_BUTTON_DOWN:String = "previousButtonDown";
@@ -129,5 +130,7 @@ package org.osmf.player.chrome.assets
 		public static const BUTTON_SEPARATOR:String = "buttonSeparator";
 		
 		public static const BUTTON_HIGHLIGHT:String = "buttonHighlight";
+		public static var CC_NORMAL:String = "ccNormal";
+		public static var CC_OVER:String = "ccOver";
 	}
 }

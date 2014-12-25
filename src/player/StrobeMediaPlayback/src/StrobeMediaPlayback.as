@@ -19,31 +19,71 @@
 
 package
 {	
-	import flash.display.*;
-	import flash.events.*;
+	import flash.display.LoaderInfo;
+	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.events.FullScreenEvent;
+	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.events.TimerEvent;
+	import flash.events.UncaughtErrorEvent;
 	import flash.external.ExternalInterface;
 	import flash.system.Capabilities;
 	import flash.ui.Mouse;
 	import flash.utils.Timer;
 	
+	import org.denivip.osmf.plugins.HLSPluginInfo;
 	import org.osmf.containers.MediaContainer;
-	import org.osmf.elements.*;
-	import org.osmf.events.*;
-	import org.osmf.layout.*;
-	import org.osmf.media.*;
+	import org.osmf.elements.ImageElement;
+	import org.osmf.elements.ImageLoader;
+	import org.osmf.events.MediaError;
+	import org.osmf.events.MediaErrorCodes;
+	import org.osmf.events.MediaErrorEvent;
+	import org.osmf.events.MediaPlayerStateChangeEvent;
+	import org.osmf.events.PlayEvent;
+	import org.osmf.events.TimeEvent;
+	import org.osmf.layout.HorizontalAlign;
+	import org.osmf.layout.LayoutMetadata;
+	import org.osmf.layout.LayoutMode;
+	import org.osmf.layout.ScaleMode;
+	import org.osmf.layout.VerticalAlign;
+	import org.osmf.media.MediaElement;
+	import org.osmf.media.MediaFactory;
+	import org.osmf.media.MediaPlayer;
+	import org.osmf.media.MediaPlayerState;
+	import org.osmf.media.MediaResourceBase;
+	import org.osmf.media.PluginInfoResource;
+	import org.osmf.media.URLResource;
 	import org.osmf.player.chrome.ChromeProvider;
 	import org.osmf.player.chrome.assets.AssetsManager;
 	import org.osmf.player.chrome.configuration.ConfigurationUtils;
 	import org.osmf.player.chrome.events.WidgetEvent;
 	import org.osmf.player.chrome.widgets.BufferingOverlay;
 	import org.osmf.player.chrome.widgets.PlayButtonOverlay;
+	import org.osmf.player.chrome.widgets.SubtitlesOverlay;
 	import org.osmf.player.chrome.widgets.VideoInfoOverlay;
-	import org.osmf.player.configuration.*;
+	import org.osmf.player.configuration.ConfigurationLoader;
+	import org.osmf.player.configuration.ControlBarMode;
+	import org.osmf.player.configuration.ControlBarType;
+	import org.osmf.player.configuration.InjectorModule;
+	import org.osmf.player.configuration.JavaScriptBridge;
+	import org.osmf.player.configuration.PlayerConfiguration;
+	import org.osmf.player.configuration.SkinParser;
+	import org.osmf.player.configuration.XMLFileLoader;
 	import org.osmf.player.containers.StrobeMediaContainer;
-	import org.osmf.player.elements.*;
-	import org.osmf.player.elements.playlistClasses.*;
-	import org.osmf.player.errors.*;
-	import org.osmf.player.media.*;
+	import org.osmf.player.elements.AlertDialogElement;
+	import org.osmf.player.elements.AuthenticationDialogElement;
+	import org.osmf.player.elements.ControlBarElement;
+	import org.osmf.player.elements.VolumeBarElement;
+	import org.osmf.player.errors.ErrorTranslator;
+	import org.osmf.player.errors.StrobePlayerErrorCodes;
+	import org.osmf.player.media.StrobeMediaFactory;
+	import org.osmf.player.media.StrobeMediaPlayer;
 	import org.osmf.player.plugins.PluginLoader;
 	import org.osmf.player.utils.StrobeUtils;
 	import org.osmf.traits.DVRTrait;
@@ -53,7 +93,6 @@ package
 	import org.osmf.traits.PlayTrait;
 	import org.osmf.utils.OSMFSettings;
 	import org.osmf.utils.OSMFStrings;
-	import org.denivip.osmf.plugins.HLSPluginInfo;
 	
 	CONFIG::LOGGING
 	{
@@ -324,6 +363,12 @@ package
 			
 			loginWindowContainer.addMediaElement(loginWindow);
 			
+			subsOverlay = new SubtitlesOverlay();
+			subsOverlay.create(null);
+			subsOverlay.layoutMetadata.horizontalAlign = HorizontalAlign.CENTER;
+			subsOverlay.layoutMetadata.verticalAlign = VerticalAlign.BOTTOM;
+			mediaContainer.layoutRenderer.addTarget(subsOverlay);
+			
 			if (configuration.controlBarMode == ControlBarMode.NONE)
 			{
 				mainContainer.layoutMetadata.layoutMode = LayoutMode.NONE;
@@ -553,6 +598,11 @@ package
 					{
 						loginWindow.target = _media;
 					}
+					
+					if (subsOverlay != null)
+					{
+						subsOverlay.media = _media;
+					}
 				}
 				else
 				{
@@ -564,6 +614,11 @@ package
 					if (bufferingOverlay != null)
 					{
 						bufferingOverlay.media = null;
+					}
+					
+					if (subsOverlay != null)
+					{
+						subsOverlay.media = null;
 					}
 				}
 			}			
@@ -1051,6 +1106,7 @@ package
 		private var posterImage:ImageElement;
 		private var playOverlay:PlayButtonOverlay;
 		private var bufferingOverlay:BufferingOverlay;
+		private var subsOverlay:SubtitlesOverlay;
 		
 		private var controlBarWidth:Number;
 		private var controlBarHeight:Number;

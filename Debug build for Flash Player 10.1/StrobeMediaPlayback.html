@@ -9,18 +9,40 @@
         </script>
         <script type="text/javascript">
             
+            // subs
+            var subs = JSON.stringify({
+                subtitles: [
+                    {
+                        src: "The_Terminator_1984_roNy.srt",
+                        label: "Terminator",
+                        language: "en"
+                    }
+                
+                ],
+                config: {
+                    fontSize: 20,
+                    fontColor: 0xffffff,
+                    position: 50,
+                    outline: 0x000000
+                }
+            });
+
             // Collect query parameters in an object that we can
             // forward to SWFObject:
             
             var pqs = new ParsedQueryString();
             var parameterNames = pqs.params(false);
             var parameters = {
-                src: "http://mediapm.edgesuite.net/strobe/content/test/AFaerysTale_sylviaApostol_640_500_short.flv",
+                src: "http://el-18.am.2gzr.com/53f775b91b8204531a90b95f.m3u8",
                 autoPlay: "false",
                 verbose: true,
                 controlBarAutoHide: "false",
                 controlBarPosition: "bottom",
-                poster: "images/poster.png"
+                poster: "http://static.2gzr.com/storage/eef383e8db7_854x480.jpg",
+                // subs params
+                plugin_subs: "SubtitlesPlugin.swf",
+                subs_namespace: "org.denivip.osmf.subtitles",
+                subs_src: encodeURIComponent(subs)
             };
             
             for (var i = 0; i < parameterNames.length; i++) {
@@ -45,7 +67,7 @@
 				"StrobeMediaPlayback.swf"
 				, "StrobeMediaPlayback"
 				, 640
-				, 480
+				, 360
 				, "10.1.0"
 				, "expressInstall.swf"
 				, parameters

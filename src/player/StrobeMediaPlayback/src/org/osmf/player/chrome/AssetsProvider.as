@@ -220,9 +220,13 @@ package org.osmf.player.chrome
 			// HD indicator:
 			addEmbeddedSymbol(AssetIDs.HD_ON, ASSET_hd_on);
 			addEmbeddedSymbol(AssetIDs.HD_OFF, ASSET_hd_off);
+			addEmbeddedSymbol(AssetIDs.HD_OVER, ASSET_hd_over);
 			
 			// Buffering overlay:
 			addEmbeddedSymbol(AssetIDs.BUFFERING_OVERLAY, ASSET_BufferingOverlay);
+			
+			addEmbeddedSymbol(AssetIDs.CC_NORMAL, ASSET_cc_normal);
+			addEmbeddedSymbol(AssetIDs.CC_OVER, ASSET_cc_over);
 		}
 		
 		private function onAssetsManagerComplete(event:Event):void

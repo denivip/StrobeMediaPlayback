@@ -26,10 +26,6 @@ package org.osmf.player.chrome.widgets
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
-	
-	import flashx.textLayout.accessibility.TextAccImpl;
-	import flashx.textLayout.formats.TextAlign;
 	
 	import org.osmf.player.chrome.assets.AssetsManager;
 	import org.osmf.player.chrome.assets.FontAsset;
