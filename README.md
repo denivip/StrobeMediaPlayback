@@ -35,7 +35,7 @@ Subtitles
 How to add subtitles:
 
 1st. Prepare subtitles params:
-
+```
 var subs = JSON.stringify({
 subtitles: [
 	{
@@ -53,9 +53,9 @@ config: {
 	outline: 0x00ff00
 }
 });
-
+```
 2nd. Pass params to player:
-
+```
 var parameters = {
 	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
 	autoPlay: true,
@@ -64,3 +64,4 @@ var parameters = {
 	subs_namespace: "org.denivip.osmf.subtitles", // don't change this string!
 	subs_src: encodeURIComponent(subs) // pass our params
 }
+```
