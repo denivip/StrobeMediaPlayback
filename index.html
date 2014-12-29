@@ -1,1 +1,147 @@
-Empty init page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Strobe Media Playback</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <script type="text/javascript" src="lib/swfobject.js">
+        </script>
+        <script type="text/javascript" src="lib/ParsedQueryString.js">
+        </script>
+        <script type="text/javascript">
+            
+            // subs
+            var subs = JSON.stringify({
+                subtitles: [
+                    {
+                        src: "The_Terminator_1984_roNy.srt",
+                        label: "Terminator",
+                        language: "en"
+                    }
+                
+                ],
+                config: {
+                    fontSize: 20,
+                    fontColor: 0xffffff,
+                    position: 50,
+                    outline: 0x000000
+                }
+            });
+
+            var gTrack = '<value key="reTrackConfig" type="class" class="com.realeyes.osmf.plugins.tracking.google.config.RETrackConfig"> \
+                            <account>UA-57971466-2</account> \
+                            <url>http://smartstream.dev/smp/StrobeMediaPlayback.html</url> \
+                            <event name="percentWatched" category="video" action="percentWatched"> \
+                                <marker percent="0" label="start" /> \
+                                <marker percent="25" label="25PercentView" /> \
+                                <marker percent="50" label="50PercentView" /> \
+                                <marker percent="75" label="75PercentView" /> \
+                            </event> \
+                            <event name="complete" category="video" action="complete" value="1" /> \
+                            <event name="pageView" /> \
+                            <updateInterval>250</updateInterval> \
+                        </value>';
+
+            // Collect query parameters in an object that we can
+            // forward to SWFObject:
+            
+            var pqs = new ParsedQueryString();
+            var parameterNames = pqs.params(false);
+            var parameters = {
+                src: "http://el-18.am.2gzr.com/53f775b91b8204531a90b95f.m3u8",
+                autoPlay: "false",
+                verbose: true,
+                controlBarAutoHide: "false",
+                controlBarPosition: "bottom",
+                poster: "http://static.2gzr.com/storage/eef383e8db7_854x480.jpg",
+                // subs params
+                plugin_subs: "SubtitlesPlugin.swf",
+                subs_namespace: "org.denivip.osmf.subtitles",
+                subs_src: encodeURIComponent(subs),
+                // google tracking
+                plugin_gtrack: "GTrackPlugin.swf",
+                "gtrack_http://www.realeyes.com/osmf/plugins/tracking/google": escape(gTrack)
+            };
+            
+            for (var i = 0; i < parameterNames.length; i++) {
+                var parameterName = parameterNames[i];
+                parameters[parameterName] = pqs.param(parameterName) ||
+                parameters[parameterName];
+            }
+            
+       	    var wmodeValue = "direct";
+            var wmodeOptions = ["direct", "opaque", "transparent", "window"];
+            if (parameters.hasOwnProperty("wmode"))
+            {
+            	if (wmodeOptions.indexOf(parameters.wmode) >= 0)
+            	{
+            		wmodeValue = parameters.wmode;
+            	}	            	
+            	delete parameters.wmode;
+            }
+            
+            // Embed the player SWF:	            
+            swfobject.embedSWF(
+				"StrobeMediaPlayback.swf"
+				, "StrobeMediaPlayback"
+				, 640
+				, 360
+				, "10.1.0"
+				, "expressInstall.swf"
+				, parameters
+				, {
+	                allowFullScreen: "true",
+	                wmode: wmodeValue
+	            }
+				, {
+	                name: "StrobeMediaPlayback"
+	            }
+			);
+            
+            /* Uncomment this code to be notified of playback errors in JavaScript:
+            
+             function onMediaPlaybackError(playerId, code, message, detail)            
+             {
+             	alert(playerId + "\n\n" + code + "\n" + message + "\n" + detail);            
+             }
+             
+             */
+            
+        </script>
+        <style type="text/css">
+        <!-- .Verdana {
+            font-family: Verdana, Geneva, sans-serif;
+        }
+        -->
+        </style>
+    </head>
+    <body>
+        <table width="100%" border="0" cellspacing="5">
+            <tr>
+                <td width="43">
+                    <img src="images/adobe-lq.png" alt="" width="43" height="72" />
+                </td>
+                <td width="320" class="Verdana">
+                    Strobe Media Playback
+                </td>
+                <td width="262">
+                    <img src="images/osmf_horizontal_red.png" width="262" height="57" alt="osmf logo"/>
+                </td>
+                <td width="*">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="0" cellspacing="5">
+            <tr>
+                <td>
+                    <div id="StrobeMediaPlayback">
+                        <p>
+                            Alternative content
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+        <a href="setup.html">Player Setup</a>
+    </body>
+</html>
