@@ -30,6 +30,44 @@ VAST Ads
 ------------
 VAST
 
+GTrack Plugin
+---------------
+You can add Google Analytics support in Strobe Media Playback.
+1st. Just add this config lines before player params:
+
+```
+var gTrack = '<value key="reTrackConfig" type="class" class="com.realeyes.osmf.plugins.tracking.google.config.RETrackConfig"> \
+    <account>YOUR GOOGLE ANALYTIC ID HERE</account> \
+    <url>http://example.com</url> \
+    <event name="percentWatched" category="video" action="percentWatched"> \
+        <marker percent="0" label="start" /> \
+        <marker percent="25" label="25PercentView" /> \
+        <marker percent="50" label="50PercentView" /> \
+        <marker percent="75" label="75PercentView" /> \
+    </event> \
+    <event name="complete" category="video" action="complete" value="1" /> \
+    <event name="pageView" /> \
+    <updateInterval>250</updateInterval> \
+</value>';
+```
+2nd. Enable GTrack plugin & pass this params to it:
+```
+var parameters = {
+	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
+	autoPlay: true,
+    verbose: true,
+    plugin_gtrack: "GTrackPlugin.swf",
+    "gtrack_http://www.realeyes.com/osmf/plugins/tracking/google": escape(gTrack)
+}
+```
+
+With this config you can track:
+- loading player with src
+- how many percent of video was viewed
+- and video complete event.
+
+If you want more parameters, you can check GTrackPlugin documentation: https://code.google.com/p/reops/wiki/GTrackPlugin
+
 Subtitles
 ------------
 How to add subtitles:
