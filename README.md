@@ -33,7 +33,7 @@ VAST
 GTrack Plugin
 ---------------
 You can add Google Analytics support in Strobe Media Playback.
-1st. Just add this config lines before player params (and change params <account> and <url> to yours):
+1st. Just add this config lines before player params (and change params 'account' and 'url' to yours actual values):
 
 ```
 var gTrack = '<value key="reTrackConfig" type="class" class="com.realeyes.osmf.plugins.tracking.google.config.RETrackConfig"> \
