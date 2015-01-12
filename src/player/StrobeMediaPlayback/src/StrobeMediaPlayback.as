@@ -65,6 +65,7 @@ package
 	import org.osmf.player.chrome.events.WidgetEvent;
 	import org.osmf.player.chrome.widgets.BufferingOverlay;
 	import org.osmf.player.chrome.widgets.PlayButtonOverlay;
+	import org.osmf.player.chrome.widgets.SlideHintWidget;
 	import org.osmf.player.chrome.widgets.SubtitlesOverlay;
 	import org.osmf.player.chrome.widgets.VideoInfoOverlay;
 	import org.osmf.player.configuration.ConfigurationLoader;
@@ -199,7 +200,11 @@ package
 			configurationLoader.load(parameters, configuration);	
 			
 			function onConfigurationReady(event:Event):void
-			{				
+			{
+				// spike =|
+				if(configuration.scrubSlides){
+					SlideHintWidget.applyParams(JSON.parse(configuration.scrubSlides));
+				}
 				OSMFSettings.enableStageVideo = configuration.enableStageVideo;
 				
 				CONFIG::LOGGING

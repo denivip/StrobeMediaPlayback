@@ -86,7 +86,8 @@ package org.osmf.player.chrome.widgets
 		public var liveOnlyTrack:String = AssetIDs.SCRUB_BAR_LIVE_ONLY_TRACK;
 		public var liveOnlyInactiveTrack:String = AssetIDs.SCRUB_BAR_LIVE_ONLY_INACTIVE_TRACK;
 		
-		public var includeTimeHint:Boolean = true;
+		public var includeTimeHint:Boolean = false;
+		public var includeSlideHint:Boolean = true;
 		
 		// Constructor
 		//
@@ -300,6 +301,11 @@ package org.osmf.player.chrome.widgets
 				scrubBarHint.tintColor = tintColor;
 				scrubBarHint.configure(<default/>, assetManager);
 			}
+			
+			if(includeSlideHint && SlideHintWidget.isReady){
+				slideHint = new SlideHintWidget();
+				slideHint.configure(<default/>, assetManager);
+			}
 		}
 				
 		override protected function get requiredTraits():Vector.<String>
@@ -354,7 +360,14 @@ package org.osmf.player.chrome.widgets
 				{
 					goToLive();
 				}
-			}			
+			}
+			// slides
+			/*if(event.traitType == MediaTraitType.TIME){
+				var timeTrait:TimeTrait = media.getTrait(MediaTraitType.TIME) as TimeTrait;
+				var dur:Number = timeTrait.duration;
+				if(slideHint)
+					slideHint.duration = dur;
+			}*/
 		
 			updateState(); 
 		}
@@ -494,6 +507,11 @@ package org.osmf.player.chrome.widgets
 				{
 					currentPositionTimer.start();
 				}
+			}
+			
+			if(timeTrait && !isNaN(timeTrait.duration) 
+				&& slideHint && !slideHint.isReady2){
+				slideHint.duration = timeTrait.duration;
 			}
 		}		
 		
@@ -680,11 +698,13 @@ package org.osmf.player.chrome.widgets
 		private function onTrackMouseOver(event:MouseEvent):void
 		{
 			showTimeHint();
+			showSlideHint();
 		}
 		
 		private function onTrackMouseMove(event:MouseEvent):void
 		{
 			showTimeHint();
+			showSlideHint();
 			if (event.buttonDown && !scrubber.sliding)
 			{
 				scrubber.start();			
@@ -735,6 +755,27 @@ package org.osmf.player.chrome.widgets
 							: WidgetHint.getInstance(this, true).widget = scrubBarHint;
 					}
 				}
+			}
+		}
+		
+		private function showSlideHint():void{
+			if(streamType == StreamType.LIVE)
+				return;
+			
+			if (scrubBarClickArea.mouseX >= 0.0 && scrubBarClickArea.mouseX <= scrubBarClickArea.width){
+				var timeTrait:TimeTrait = media ? media.getTrait(MediaTraitType.TIME) as TimeTrait : null;
+				if (timeTrait){
+					var time:Number = timeTrait.duration * ((mouseX - scrubber.width / 2.0 - scrubberStart) / (scrubberEnd - scrubberStart));
+					
+					if(slideHint && slideHint.isReady2 && !isNaN(time)){
+						// select slide to show
+						slideHint.currentTime = time;
+						
+						WidgetHint.getInstance(this, true).widget
+							? WidgetHint.getInstance(this, true).updatePosition()
+							: WidgetHint.getInstance(this, true).widget = slideHint;
+					}
+				}	
 			}
 		}
 		
@@ -839,6 +880,7 @@ package org.osmf.player.chrome.widgets
 		private var scrubBarClickArea:Sprite;
 		
 		private var scrubBarHint:TimeHintWidget;
+		private var slideHint:SlideHintWidget;
 		
 		private var scrubberStart:Number;
 		private var scrubberEnd:Number;

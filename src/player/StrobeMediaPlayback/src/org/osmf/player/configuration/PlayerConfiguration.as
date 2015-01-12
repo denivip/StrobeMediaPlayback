@@ -87,6 +87,10 @@ package org.osmf.player.configuration
 		/** Defines the path to the image to show before the main content shows */
 		public var poster:String = "";
 		
+		public var scrubSlides:String = null;
+		
+		//public var slidesPos:Number = 56;
+		
 		/** Defines the path to the image to show at the end of the content */
 		public var endOfVideoOverlay:String = "";
 	

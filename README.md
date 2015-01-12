@@ -16,25 +16,64 @@ This StrobeMediaPlayback configuration features:
 
 Quick start
 ------------
-Embed code
+In simplest case all you need is just
+* include swfobject (https://code.google.com/p/swfobject/) library on your page:
+```
+<script type="text/javascript" src="lib/swfobject.js"></script>
+```
+* add place for player on the page:
+```
+<!-- your page code here -->
+<div id="strobeplayer"></div>
+<!-- another page code -->
+```
+* set src parameter with your video url and embed player:
+```
+<script>
+var parameters = {
+	src: "http://el-18.am.2gzr.com/53f775b91b8204531a90b95f.m3u8"
+};
 
+// Embed the player SWF:	            
+swfobject.embedSWF(
+		"StrobeMediaPlayback.swf" // swf
+		, "strobeplayer" // your player place
+		// player size
+		, 640
+		, 360
+		, "10.1.0"
+		, "expressInstall.swf"
+		, parameters
+		, {
+	        allowFullScreen: "true",
+	        wmode: "direct"
+	    }
+		, {
+	        name: "StrobeMediaPlayback"
+	    }
+	);
+</script>
+```
 Configuration
 ------------
-Params description
+You can see default params here:
+* Basic options: http://help.adobe.com/en_US/FMPSMP/Dev/WS3fd35e178bb08cb3-49a02f129f1468bd6-7fff.html
+* Advanced options: http://help.adobe.com/en_US/FMPSMP/Dev/WS3fd35e178bb08cb3-49a02f129f1468bd6-7ff9.html
+* Bandwidth options: http://help.adobe.com/en_US/FMPSMP/Dev/WS3fd35e178bb08cb3-49a02f129f1468bd6-7ffa.html
 
 JavaScript API
 ------------
-Methods exposed and callbacks
+TODO
 
 VAST Ads
 ------------
-VAST
+TODO
 
 GTrack Plugin
 ---------------
 You can add Google Analytics support in Strobe Media Playback.
 
-1st. Just add this config lines before player params (and change params 'account' and 'url' to yours actual values):
+* Just add this config lines before player params (and change params 'account' and 'url' to yours actual values):
 
 ```
 var gTrack = '<value key="reTrackConfig" type="class" class="com.realeyes.osmf.plugins.tracking.google.config.RETrackConfig"> \
@@ -51,7 +90,7 @@ var gTrack = '<value key="reTrackConfig" type="class" class="com.realeyes.osmf.p
     <updateInterval>250</updateInterval> \
 </value>';
 ```
-2nd. Enable GTrack plugin & pass this params to it:
+* Enable GTrack plugin & pass this params to it:
 ```
 var parameters = {
 	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
@@ -73,7 +112,7 @@ Subtitles
 ------------
 How to add subtitles:
 
-1st. Prepare subtitles params:
+* Prepare subtitles params:
 ```
 var subs = JSON.stringify({
 subtitles: [
@@ -93,7 +132,7 @@ config: {
 }
 });
 ```
-2nd. Pass params to player:
+* Pass params to player:
 ```
 var parameters = {
 	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
@@ -102,5 +141,29 @@ var parameters = {
     plugin_subs: "SubtitlesPlugin.swf", // enable Subtitles plugin (you can find it in the plugins folder)
 	subs_namespace: "org.denivip.osmf.subtitles", // don't change this string!
 	subs_src: encodeURIComponent(subs) // pass our params
+}
+```
+Scrub thumbnails
+------------------
+You can add prewiev images on the scrub bar timeline:
+
+* Just set scrub options:
+```
+var slides = JSON.stringify({
+	src: "http://dozeu380nojz8.cloudfront.net/sprites/10213056-532281e060b4d.jpg", // source image with slides from top-left to bottom-right
+	width: 160, // slide width
+	height: 68, // slide height
+	total: 105, // total slides on source pics (can be less then actual nuber, but don't set it to bigger values)
+	slidePos: 56 // slides position (change it if you use custom player skin)
+});
+```
+
+* Pass it to player:
+```
+var parameters = {
+	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
+	autoPlay: true,
+    verbose: true,
+    scrubSlides: encodeURIComponent(slides), // our slides config
 }
 ```

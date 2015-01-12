@@ -6,6 +6,24 @@
         <script type="text/javascript" src="lib/swfobject.js"></script>
         <script type="text/javascript" src="lib/ParsedQueryString.js"></script>
         <script type="text/javascript">
+            // subs
+            var subs = JSON.stringify({
+                subtitles: [
+                    {
+                        src: "The_Terminator_1984_roNy.srt",
+                        label: "Terminator",
+                        language: "en"
+                    }
+                
+                ],
+                config: {
+                    fontSize: 20,
+                    fontColor: 0xffffff,
+                    position: 50,
+                    outline: 0x000000
+                }
+            });
+        
             // Collect query parameters in an object that we can
             // forward to SWFObject:
             var pqs = new ParsedQueryString();
@@ -16,7 +34,11 @@
                 verbose: true,
                 controlBarAutoHide: "false",
                 controlBarPosition: "bottom",
-                poster: "http://static.2gzr.com/storage/eef383e8db7_854x480.jpg"
+                poster: "http://static.2gzr.com/storage/eef383e8db7_854x480.jpg",
+                // subs params
+                plugin_subs: "SubtitlesPlugin.swf",
+                subs_namespace: "org.denivip.osmf.subtitles",
+                subs_src: encodeURIComponent(subs)
             };
             
             for (var i = 0; i < parameterNames.length; i++) {
