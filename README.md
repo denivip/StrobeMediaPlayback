@@ -65,7 +65,7 @@ You can see default params here:
 JavaScript API
 ------------
 You need get current player instance:
-- add JSBridgeHaldler function to flashvars:
+- add JSBridgeHandler function to flashvars:
 ```
 var parameters = {
 	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
@@ -90,8 +90,10 @@ You can use all methods/properties of MediaPlayer class as well as in AS3:
 player.play();
 ```
 But for properties you need add get/set prefix:
+```
 player.setSrc('<url_to_video>');
 console.log(player.getSrc());
+```
 
 Also most of all playback events available in JS:
 ```
@@ -129,6 +131,8 @@ function onSeeking(state){
 	}
 }
 ```
+
+Full list of available methods/events you can find in the JSAPI.md doc.
 
 
 VAST Ads
