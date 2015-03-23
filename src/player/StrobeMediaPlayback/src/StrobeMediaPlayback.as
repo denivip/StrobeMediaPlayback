@@ -197,6 +197,13 @@ package
 			// TODO: Add this event only when the resource is DVR rolling window not all the time
 			player.addEventListener(TimeEvent.CURRENT_TIME_CHANGE, onCurrentTimeChange);
 			
+			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE, function(e:MediaPlayerStateChangeEvent):void{
+				if(e.state == MediaPlayerState.READY){
+					if(player.hasAlternativeAudio)
+						player.switchAlternativeAudioIndex(0);
+				}
+			});
+			
 			configurationLoader.load(parameters, configuration);	
 			
 			function onConfigurationReady(event:Event):void

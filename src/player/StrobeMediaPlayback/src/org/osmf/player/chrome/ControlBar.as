@@ -39,6 +39,7 @@ package org.osmf.player.chrome
 	import org.osmf.player.chrome.widgets.ScrubBar;
 	import org.osmf.player.chrome.widgets.SubsSwitcher;
 	import org.osmf.player.chrome.widgets.TimeViewWidget;
+	import org.osmf.player.chrome.widgets.VideoSwitcher;
 	import org.osmf.player.chrome.widgets.Widget;
 	import org.osmf.player.chrome.widgets.WidgetIDs;
 	import org.osmf.traits.MediaTraitType;
@@ -148,6 +149,12 @@ package org.osmf.player.chrome
 			streamSwitcher.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
 			rightControls.addChildWidget(streamSwitcher);
 			
+			// Video switcher
+			var videoSwitcher:VideoSwitcher = new VideoSwitcher();
+			videoSwitcher.layoutMetadata.verticalAlign = VerticalAlign.MIDDLE;
+			videoSwitcher.layoutMetadata.horizontalAlign = HorizontalAlign.RIGHT;
+			rightControls.addChildWidget(videoSwitcher);
+			
 			// Spacer
 			var afterTimeSpacer:Widget = new Widget();
 			afterTimeSpacer.width = 5;
@@ -196,7 +203,7 @@ package org.osmf.player.chrome
 					, leftControls		
 					, scrubBar, afterScrubSpacer
 					, timeViewWidget, afterTimeSpacer
-					, ccSwitcher, streamSwitcher, muteButton, afterVolumeSpacer
+					, ccSwitcher, streamSwitcher, videoSwitcher, muteButton, afterVolumeSpacer
 					, fullscreenEnterButton, fullscreenLeaveButton, afterFullscreenSpacer
 					, rightControls, rightMargin
 					]

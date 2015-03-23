@@ -12,6 +12,7 @@ This StrobeMediaPlayback configuration features:
 * Scrubbar thumbnails
 * Subtitles 
 * VAST ads
+* HLS Multi-angle video support (not multiquality at this moment)
 * Dozens of other "basic" StrobeMediaPlayback features
 
 Quick start
@@ -63,7 +64,72 @@ You can see default params here:
 
 JavaScript API
 ------------
-TODO
+You need get current player instance:
+- add JSBridgeHaldler function to flashvars:
+```
+var parameters = {
+	src: "https://hls.spuul.com/debug/unprotected/apl-noaes/master.m3u8",
+	... // other parameters
+    javascriptCallbackFunction: "onJavaScriptBridgeCreated"
+}
+```
+- declare this function
+```
+var player = null;
+function onJavaScriptBridgeCreated(id){
+	if(player == null){
+		player = document.getElementById(id);
+		// other actions
+	}
+}
+```
+
+API
+You can use all methods/properties of MediaPlayer class as well as in AS3:
+```
+player.play();
+```
+But for properties you need add get/set prefix:
+player.setSrc('<url_to_video>');
+console.log(player.getSrc());
+
+Also most of all playback events available in JS:
+```
+player.addEventListener('mediaPlayerStateChange', onMediaPlayerStateChange);
+function onMediaPlayerStateChange(state){
+	switch(state){
+		case 'emptied': // ready
+			//...
+		break;
+		case 'loadstart': // loading
+			//...
+		break;
+		case 'play': // playing
+			//...
+		break;
+		case 'pause': // paused
+			//...
+		break;
+		case 'waiting': // buffering
+			//...
+		break;
+	}
+}
+
+player.addEventListener('seekingChange', onSeeking);
+function onSeeking(state){
+	if(state == 'seeking'){
+		// you can enable loading animation as example
+		loader.show();
+	}
+	if(state == 'seeked'){
+		loader.hide();
+		// you can move external seekbar to actual player position
+		seekBar.progress = player.getCurrentTime();
+	}
+}
+```
+
 
 VAST Ads
 ------------

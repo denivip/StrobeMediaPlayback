@@ -38,6 +38,7 @@ package org.osmf.player.configuration
 	import org.osmf.media.MediaFactory;
 	import org.osmf.player.media.StrobeMediaFactory;
 	import org.osmf.net.MulticastResource;
+	import org.denivip.osmf.net.HLSStreamingResource;
 
 	/**
 	 * A basic implementation of a dependency injection module.
