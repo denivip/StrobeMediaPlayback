@@ -90,8 +90,10 @@ You can use all methods/properties of MediaPlayer class as well as in AS3:
 player.play();
 ```
 But for properties you need add get/set prefix:
+```
 player.setSrc('<url_to_video>');
 console.log(player.getSrc());
+```
 
 Also most of all playback events available in JS:
 ```
